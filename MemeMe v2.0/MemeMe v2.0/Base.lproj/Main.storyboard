@@ -40,6 +40,42 @@
             </objects>
             <point key="canvasLocation" x="612" y="371"/>
         </scene>
+        <!--Meme Detail View Controller-->
+        <scene sceneID="fQZ-9H-E4I">
+            <objects>
+                <viewController storyboardIdentifier="MemeDetailViewcontroller" id="EJX-Q5-ppF" customClass="MemeDetailViewController" customModule="MemeMe_v2_0" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="u7x-wR-xxb"/>
+                        <viewControllerLayoutGuide type="bottom" id="rXk-iX-mG0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zyc-RE-5Bc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aaN-wV-dzI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2187" y="-333"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="cT1-Qe-N5X">
+            <objects>
+                <viewController storyboardIdentifier="MemeEditorViewcontroller" id="IVR-Yp-svB" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kag-nK-de1"/>
+                        <viewControllerLayoutGuide type="bottom" id="KiZ-bt-3bd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ECH-uH-f92" customClass="MemeCollectionViewCell" customModule="MemeMe_v2_0" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1EV-lI-hVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2187" y="371"/>
+        </scene>
         <!--Sent Memes Table View Controller-->
         <scene sceneID="Y7r-Nc-4t6">
             <objects>
@@ -81,7 +117,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="feu-K3-f6l">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionCell" id="feu-K3-f6l" customClass="MemeCollectionViewCell" customModule="MemeMe_v2_0" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
