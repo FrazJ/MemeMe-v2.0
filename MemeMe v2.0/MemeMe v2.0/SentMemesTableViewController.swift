@@ -48,6 +48,6 @@ class SentMemesTableViewController: UITableViewController {
         // TODO: - Add the code to switch to the Meme Detail VC when a row is selected
     }
     
-    //Test commit
+    //Test commit 2
 }
 
