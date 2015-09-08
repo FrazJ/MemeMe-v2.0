@@ -47,5 +47,7 @@ class SentMemesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // TODO: - Add the code to switch to the Meme Detail VC when a row is selected
     }
+    
+    //Test commit
 }
 
