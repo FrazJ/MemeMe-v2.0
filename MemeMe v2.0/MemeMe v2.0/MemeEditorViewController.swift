@@ -60,6 +60,13 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
         
         //Disable the share button if the user hasn't chosen an image
         shareButton.enabled = memeImageView.image != nil
+        
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,13 +75,8 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    
-    // MARK: Functions
+    // MARK: Methods
     
     ///Function sets the constraints for the top and bottom text fields, ensuring they are 
     ///positioned correctly based on the postion the image that has been selected.
@@ -129,4 +131,37 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
         textField.textAlignment = alignment
     }
     
+    ///Function that adds this ViewController as an observer to keyboard notifications
+    func subscribeToKeyboardNotifications() {
+        
+        //Subscribe to be notified when the keyboard will be displayed
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "keyboardWillShow:",
+            name: UIKeyboardWillShowNotification,
+            object: nil)
+        
+        //Subscribe to be notified when the keyboard will be hidden
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "keyboardWillHide:",
+            name: UIKeyboardWillHideNotification,
+            object: nil)
+    }
+    
+    ///Function that removes this ViewController as an observer for keyboard notifications
+    func unsubscribeFromKeyboardNotifications() {
+        
+        //Unsubscribe to be notified when the keyboard will be displayed
+        NSNotificationCenter.defaultCenter().removeObserver(
+            self,
+            name: UIKeyboardWillShowNotification,
+            object: nil)
+        
+        //Unsubscribe to be notified when the keyboard will be hidden
+        NSNotificationCenter.defaultCenter().removeObserver(
+            self,
+            name: UIKeyboardWillHideNotification,
+            object: nil)
+    }
 }
