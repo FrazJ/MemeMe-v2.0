@@ -9,11 +9,18 @@
 import UIKit
 import AVFoundation
 
-class MemeEditorViewController: UIViewController {
+class MemeEditorViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Properties
     var topConstraint : NSLayoutConstraint!
     var bottomConstraint : NSLayoutConstraint!
+    
+    let memeTextAttributes = [
+        NSStrokeColorAttributeName : UIColor.blackColor(),
+        NSForegroundColorAttributeName : UIColor.whiteColor(),
+        NSFontAttributeName : UIFont(name: "Impact", size: 40)!,
+        NSStrokeWidthAttributeName : NSNumber(float: -3.0)
+    ]
     
     // MARK: Outlets
     @IBOutlet weak var topTextField: UITextField!
@@ -21,10 +28,23 @@ class MemeEditorViewController: UIViewController {
     @IBOutlet weak var memeImageView: UIImageView!
     
     // MARK: View lifecycle functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        //Setup the top textField
+        configureTextField(topTextField,
+            text: "TOP",
+            delegate: self,
+            attributes: memeTextAttributes,
+            alignment: .Center)
+        
+        //Setup the bottom textField
+        configureTextField(bottomTextField,
+            text: "BOTTOM",
+            delegate: self,
+            attributes: memeTextAttributes,
+            alignment: .Center)
     }
 
     
@@ -42,7 +62,8 @@ class MemeEditorViewController: UIViewController {
     
     // MARK: Functions
     
-    /* Function sets the constraints for the top and bottom text fields, ensuring they are positioned correctly based upon the image that has been selected */
+    ///Function sets the constraints for the top and bottom text fields, ensuring they are 
+    ///positioned correctly based on the postion the image that has been selected.
     func layoutTextFields() {
         
         //Remove any existing constraints
@@ -82,6 +103,16 @@ class MemeEditorViewController: UIViewController {
             constant: -margin)
         view.addConstraint(bottomConstraint)
         
+    }
+    
+    ///Function used to configure textFields in the view
+    func configureTextField(textField: UITextField, text: String, delegate: UITextFieldDelegate,
+        attributes: [String : NSObject], alignment: NSTextAlignment) {
+        
+        textField.text = text
+        textField.delegate = delegate
+        textField.defaultTextAttributes = attributes
+        textField.textAlignment = alignment
     }
     
 }
