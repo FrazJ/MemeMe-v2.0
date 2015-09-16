@@ -18,6 +18,7 @@
 		BEAF5E7E1B9A30DD00E0C451 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEAF5E7D1B9A30DD00E0C451 /* Images.xcassets */; };
 		BEAF5E811B9A30DD00E0C451 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEAF5E7F1B9A30DD00E0C451 /* LaunchScreen.xib */; };
 		BEAF5E8D1B9A30DD00E0C451 /* MemeMe_v2_0Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAF5E8C1B9A30DD00E0C451 /* MemeMe_v2_0Tests.swift */; };
+		BEB9DC691BA9F07500A18537 /* Impact.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEB9DC681BA9F07500A18537 /* Impact.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		BEAF5E861B9A30DD00E0C451 /* MemeMe v2.0Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MemeMe v2.0Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEAF5E8B1B9A30DD00E0C451 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEAF5E8C1B9A30DD00E0C451 /* MemeMe_v2_0Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMe_v2_0Tests.swift; sourceTree = "<group>"; };
+		BEB9DC681BA9F07500A18537 /* Impact.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Impact.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				BEAF5E7D1B9A30DD00E0C451 /* Images.xcassets */,
 				BEAF5E7F1B9A30DD00E0C451 /* LaunchScreen.xib */,
 				BEAF5E731B9A30DD00E0C451 /* Info.plist */,
+				BEB9DC681BA9F07500A18537 /* Impact.ttf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB9DC691BA9F07500A18537 /* Impact.ttf in Resources */,
 				BEAF5E7C1B9A30DD00E0C451 /* Main.storyboard in Resources */,
 				BEAF5E811B9A30DD00E0C451 /* LaunchScreen.xib in Resources */,
 				BEAF5E7E1B9A30DD00E0C451 /* Images.xcassets in Resources */,
