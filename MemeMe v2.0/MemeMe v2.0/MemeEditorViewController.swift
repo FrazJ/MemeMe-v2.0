@@ -27,7 +27,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     
     
     
@@ -57,6 +57,9 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
         
         //Disable the camera button if the device doesn't have a camera
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
+        
+        //Disable the share button if the user hasn't chosen an image
+        shareButton.enabled = memeImageView.image != nil
     }
     
     override func viewDidLayoutSubviews() {
