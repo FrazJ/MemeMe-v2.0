@@ -26,6 +26,10 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var memeImageView: UIImageView!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+    
+    
+    
     
     // MARK: View lifecycle functions
     
@@ -47,6 +51,13 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
             alignment: .Center)
     }
 
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Disable the camera button if the device doesn't have a camera
+        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
