@@ -28,19 +28,37 @@ class SentMemesTableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView!.reloadData()
+    }
+    
     
     // MARK: - TableView data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: - Add the code to get the number of rows in the table
-        return Int(2)
+        return memes.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // TODO: - Add the code to setup each of the cells
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel?.text = "Some words go here"
-        return cell
+    override func tableView(tableView: UITableView,
+        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+            
+            //Get the meme from the array corresponding to the row
+            var meme = memes[indexPath.row]
+            
+            //Create the cell text from the top and bottom meme text, then make it the cell text
+            var topMemeText = meme.topText
+            var bottomMemetext = meme.bottomText
+            var cellText = topMemeText + " " + bottomMemetext
+            cell.textLabel?.text = cellText
+            
+            //Add the memeImage to the cell
+            cell.imageView?.image = meme.memedImage
+            
+            return cell
         
     }
     

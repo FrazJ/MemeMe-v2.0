@@ -9,7 +9,8 @@
 import UIKit
 import AVFoundation
 
-class MemeEditorViewController: UIViewController, UITextFieldDelegate {
+class MemeEditorViewController:
+UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     // MARK: Properties
     var topConstraint : NSLayoutConstraint!
@@ -22,17 +23,19 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
         NSStrokeWidthAttributeName : NSNumber(float: -3.0)
     ]
     
+    
     // MARK: Outlets
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var topToolbar: UINavigationBar!
+    @IBOutlet weak var bottomToolbar: UIToolbar!
     
     
     
     // MARK: View lifecycle functions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,7 +69,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        unsubscribeFromKeyboardNotifications()
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,6 +77,55 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
         layoutTextFields()
     }
     
+    
+    // MARK: Actions
+    
+    ///Function is called when the user presses either the Camera or Album buttons
+    @IBAction func pickImage(sender: UIBarButtonItem) {
+        
+        //Creates a imagePickerViewController and assigns this viewController as it's delegate
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        //Checks the title of the sender and displays the camera or photo library accordingly
+        if sender.title == "Album" {
+            imagePicker.sourceType = .PhotoLibrary
+            presentViewController(imagePicker, animated: true, completion: nil)
+        } else {
+            imagePicker.sourceType = .Camera
+            presentViewController(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
+    
+    ///Function that shares and saves a MemedImage
+    @IBAction func shareMemedImage(sender: UIBarButtonItem) {
+        
+        //Generated a memed image
+        let memedImage = generateMemedImage()
+        
+        //Creates a new ActivityViewController
+        let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        
+        //Closure for handling the users action with the ActivityViewController
+        activityViewController.completionWithItemsHandler = { activity, completed, items, error in
+            if completed {
+                
+                //Save the image
+                self.save()
+                
+                //Dismiss the view controller
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    
+    ///Function is called when the user presses the cancel button. It dismisses the ViewController
+    ///and returns the user to the Sent Memes view.
+    @IBAction func cancelMakingMeme(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     
     // MARK: Methods
@@ -164,4 +216,113 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate {
             name: UIKeyboardWillHideNotification,
             object: nil)
     }
+    
+    ///Function that generates a memeImage from the image and text in the memeEditor
+    func generateMemedImage() -> UIImage {
+        
+        //Hide the toolbars
+        topToolbar.hidden = true
+        bottomToolbar.hidden = true
+        
+        //Size of the selected image
+        var imageSize = memeImageView.image!.size
+        
+        //Frame of the image after having aspect fit applied
+        var frame = AVMakeRectWithAspectRatioInsideRect(imageSize, memeImageView.bounds)
+        
+        //Frame update to CGRect rounded to the nearest pixel
+        frame = CGRectMake(
+            ceil(frame.origin.x),
+            ceil(frame.origin.y),
+            floor(frame.size.width),
+            floor(frame.size.height))
+        
+        //CGRect fo the drawInHierarchyInRect call
+        var rect = CGRectMake(
+            -frame.origin.x,
+            -frame.origin.y,
+            view.frame.size.width,
+            view.frame.size.height)
+        
+        
+        //Render view to an image
+        UIGraphicsBeginImageContext(frame.size)
+        view.drawViewHierarchyInRect(rect, afterScreenUpdates: true)
+        let memedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //Show the toolbars
+        topToolbar.hidden = false
+        bottomToolbar.hidden = false
+        
+        return memedImage
+    }
+    
+    ///Function that saves the memedImage
+    func save() {
+        //Create the memedImage
+        let memedImage = generateMemedImage()
+        
+        //Create a meme object to store the memed image
+        var meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!,
+            originalImage: memeImageView.image!, memedImage: memedImage)
+        
+        //Add the meme to the memes array in the Application Delegate
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
+    }
+    
+    ///Function that raises the view up out the way of the keyboard
+    func keyboardWillShow(notification: NSNotification) {
+        if bottomTextField.isFirstResponder() {
+            view.frame.origin.y -= getKeyboardHeight(notification)
+            println(getKeyboardHeight(notification))
+        }
+    }
+    
+    ///Function that lowers the view when the keyboard is hidden
+    func keyboardWillHide(notification: NSNotification) {
+        if bottomTextField.isFirstResponder() {
+            view.frame.origin.y = 0
+        }
+    }
+    
+    //Fucntion that retrives the height of a keyboard
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo! [UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+    }
+    
+    
+    // MARK: ImagePickerControllerDelegate functions
+    
+    func imagePickerController(picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        
+        //Passes the image selected by the user to to the memeImageView
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            memeImageView.image = image
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    // MARK: UITextFieldDelegate functions
+    
+    //Function causes the active textField to resignFirstResponder when 'Return' is hit
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //Function ensures that any characters entered are in upper case
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+
+        textField.text = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string.uppercaseString)
+        
+        return false
+    }
+    
 }
