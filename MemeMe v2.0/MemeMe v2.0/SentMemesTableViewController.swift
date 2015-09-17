@@ -63,7 +63,18 @@ class SentMemesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // TODO: - Add the code to switch to the Meme Detail VC when a row is selected
+        
+        //Instantiate the MemeDeatailViewController
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewcontroller") as! MemeDetailViewController
+        
+        //Get the meme for the row that has been selected
+        var meme = memes[indexPath.row]
+     
+        //Pass the meme to the viewController
+        detailController.meme = meme
+        
+        //Push the detailed view controoler onto the stack, making it display
+        navigationController!.pushViewController(detailController, animated: true)
     }
 }
 
