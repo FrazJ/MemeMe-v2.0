@@ -30,11 +30,11 @@
             </objects>
             <point key="canvasLocation" x="-106" y="-44"/>
         </scene>
-        <!--Collection view-->
+        <!--Navigation Controller-->
         <scene sceneID="JTl-hW-qKB">
             <objects>
                 <navigationController id="Dvm-cC-OGf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Collection view" id="ENt-e0-ygD"/>
+                    <tabBarItem key="tabBarItem" title="" image="collection" id="ENt-e0-ygD"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HZa-uX-wJY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -62,13 +62,26 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d4g-Zp-OQa">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xQ8-xs-dxS">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="XjB-qt-siM"/>
+                                    <barButtonItem systemItem="edit" id="iDT-0G-Tus"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="aWa-77-XSR"/>
+                                    <barButtonItem systemItem="trash" id="abs-Vy-sKf"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wc6-Gz-JNu"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="d4g-Zp-OQa" firstAttribute="top" secondItem="zyc-RE-5Bc" secondAttribute="topMargin" id="DRD-05-ELp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xQ8-xs-dxS" secondAttribute="trailing" constant="-16" id="MvN-g2-eVE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="d4g-Zp-OQa" secondAttribute="trailing" constant="-16" id="PPf-n2-Sae"/>
+                            <constraint firstItem="rXk-iX-mG0" firstAttribute="top" secondItem="xQ8-xs-dxS" secondAttribute="bottom" id="T31-ew-UPk"/>
                             <constraint firstItem="rXk-iX-mG0" firstAttribute="top" secondItem="d4g-Zp-OQa" secondAttribute="bottom" id="TRU-xO-qcO"/>
                             <constraint firstItem="d4g-Zp-OQa" firstAttribute="leading" secondItem="zyc-RE-5Bc" secondAttribute="leadingMargin" constant="-16" id="UKs-vW-niC"/>
+                            <constraint firstItem="xQ8-xs-dxS" firstAttribute="leading" secondItem="zyc-RE-5Bc" secondAttribute="leadingMargin" constant="-16" id="myr-Kv-yHG"/>
                         </constraints>
                     </view>
                     <connections>
@@ -77,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aaN-wV-dzI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2091" y="366"/>
+            <point key="canvasLocation" x="1375" y="1095"/>
         </scene>
         <!--Meme Editor View Controller-->
         <scene sceneID="cp6-5w-UQ0">
@@ -111,6 +124,16 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lue-eI-75J">
+                                <rect key="frame" x="16" y="472" width="568" height="40"/>
+                                <fontDescription key="fontDescription" name="Impact" family="Impact" pointSize="40"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kWT-jE-R89">
+                                <rect key="frame" x="16" y="110" width="568" height="40"/>
+                                <fontDescription key="fontDescription" name="Impact" family="Impact" pointSize="40"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a6l-IE-Dft">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
@@ -129,16 +152,6 @@
                                     <barButtonItem systemItem="flexibleSpace" id="Y8y-k3-bBO"/>
                                 </items>
                             </toolbar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lue-eI-75J">
-                                <rect key="frame" x="16" y="472" width="568" height="40"/>
-                                <fontDescription key="fontDescription" name="Impact" family="Impact" pointSize="40"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kWT-jE-R89">
-                                <rect key="frame" x="16" y="110" width="568" height="40"/>
-                                <fontDescription key="fontDescription" name="Impact" family="Impact" pointSize="40"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -170,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QKb-yl-J3h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2091" y="-514"/>
+            <point key="canvasLocation" x="2097" y="8"/>
         </scene>
         <!--Sent Memes Table View Controller-->
         <scene sceneID="Y7r-Nc-4t6">
@@ -257,11 +270,11 @@
             </objects>
             <point key="canvasLocation" x="1375" y="371"/>
         </scene>
-        <!--Table view-->
+        <!--Navigation Controller-->
         <scene sceneID="3fr-m6-0LU">
             <objects>
                 <navigationController id="7bY-bc-fUq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Table view" id="1vq-wc-9HK"/>
+                    <tabBarItem key="tabBarItem" title="" image="table" id="1vq-wc-9HK"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0VE-rz-h1w">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -275,4 +288,8 @@
             <point key="canvasLocation" x="612" y="-333"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="collection" width="30" height="30"/>
+        <image name="table" width="30" height="30"/>
+    </resources>
 </document>
