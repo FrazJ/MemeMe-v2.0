@@ -12,6 +12,7 @@ class MemeDetailViewController: UIViewController {
 
     // MARK: Properties
     var meme : Meme!
+    var memeIndex : Int!
     
     // MARK: Outlets
     @IBOutlet weak var memeImageView: UIImageView!
@@ -32,6 +33,23 @@ class MemeDetailViewController: UIViewController {
         
         //Displays the tab bar
         tabBarController?.tabBar.hidden = false
+    }
+    
+    // MARK: Actions
+    
+    ///Function deletes the meme that is currently being viewed
+    @IBAction func deleteMeme(sender: UIBarButtonItem) {
+        
+        //Remove the meme currenlty being viewed from the array of memes
+        (UIApplication.sharedApplication().delegate as! AppDelegate).memes.removeAtIndex(memeIndex)
+        
+        //Return to the sent memes view
+        navigationController?.popViewControllerAnimated(true)
+        
+    }
+    
+    ///Function edits launches the meme Editor so that the currently selected Meme can be edited.
+    @IBAction func editMeme(sender: UIBarButtonItem) {
     }
     
 }

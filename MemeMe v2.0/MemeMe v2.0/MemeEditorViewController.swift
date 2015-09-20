@@ -115,6 +115,13 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     // MARK: Methods
     
+    /* 
+    
+    Thanks to Axel Guilmin for a solution to positioning https://github.com/axelguilmin/MemeMe the
+    textFields more accurately, and taking a screenshot more accurately.
+    
+    */
+    
     ///Function sets the constraints for the top and bottom text fields, ensuring they are 
     ///positioned correctly based on the postion the image that has been selected.
     func layoutTextFields() {

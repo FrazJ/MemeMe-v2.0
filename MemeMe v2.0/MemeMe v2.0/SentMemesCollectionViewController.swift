@@ -28,12 +28,17 @@ class SentMemesCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        //Configures the UICollectionViewFlowLayout
         let space : CGFloat = 3.0
         let dimension = (view.frame.size.width - (2 * space)) / 3
         
         flowLayout.minimumLineSpacing = space
         flowLayout.minimumInteritemSpacing = space
         flowLayout.itemSize = CGSizeMake(dimension, dimension)
+
+        //Set the background of the collection view
+        collectionView?.backgroundColor = .whiteColor()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -74,8 +79,9 @@ class SentMemesCollectionViewController: UICollectionViewController {
         //Get the meme for the row that has been selected
         let meme = memes[indexPath.row]
         
-        //Pass the meme to the viewController
+        //Pass the meme and it's index to the viewController
         detailController.meme = meme
+        detailController.memeIndex = indexPath.row
         
         //Push the detailed view controoler onto the stack, making it display
         navigationController!.pushViewController(detailController, animated: true)

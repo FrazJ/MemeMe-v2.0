@@ -67,9 +67,17 @@
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="XjB-qt-siM"/>
-                                    <barButtonItem systemItem="edit" id="iDT-0G-Tus"/>
+                                    <barButtonItem systemItem="edit" id="iDT-0G-Tus">
+                                        <connections>
+                                            <action selector="editMeme:" destination="EJX-Q5-ppF" id="j5u-bY-rZr"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="aWa-77-XSR"/>
-                                    <barButtonItem systemItem="trash" id="abs-Vy-sKf"/>
+                                    <barButtonItem systemItem="trash" id="abs-Vy-sKf">
+                                        <connections>
+                                            <action selector="deleteMeme:" destination="EJX-Q5-ppF" id="nF2-5C-r5j"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wc6-Gz-JNu"/>
                                 </items>
                             </toolbar>
@@ -187,10 +195,10 @@
                             <outlet property="delegate" destination="mzB-gO-P9s" id="hka-4e-EBw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="TEU-yu-CgI">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="9Ho-uf-S28">
+                    <navigationItem key="navigationItem" id="JWF-jS-d2j">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="K5F-2r-zcc">
                             <connections>
-                                <action selector="createNewMeme:" destination="mzB-gO-P9s" id="Zik-5F-lK6"/>
+                                <action selector="createNewMeme:" destination="mzB-gO-P9s" id="bKS-2X-QJi"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

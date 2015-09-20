@@ -76,8 +76,9 @@ class SentMemesTableViewController: UITableViewController {
         //Get the meme for the row that has been selected
         let meme = memes[indexPath.row]
      
-        //Pass the meme to the viewController
+        //Pass the meme and it's index to the viewController
         detailController.meme = meme
+        detailController.memeIndex = indexPath.row
         
         //Push the detailed view controoler onto the stack, making it display
         navigationController!.pushViewController(detailController, animated: true)
