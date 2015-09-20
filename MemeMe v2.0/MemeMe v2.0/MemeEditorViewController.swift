@@ -59,8 +59,13 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareMemedImage:")
+        //Creates a new button with the Actin system icon
+        shareButton = UIBarButtonItem(
+            barButtonSystemItem: .Action,
+            target: self,
+            action: "shareMemedImage:")
      
+        //Add the shareButton to the navigation bar
         navigationItem.rightBarButtonItem = shareButton
         
         //Hides the tab bar
@@ -199,7 +204,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
             object: nil)
     }
     
-    ///Function is called when the user presses the action button in the navigation bar. It takes a
+    ///Function is called when the user presses the share button in the navigation bar. It takes a
     /// screenshot of the image currently on the screen and passes it to an ActivityController
     func shareMemedImage(sender: UIBarButtonItem) {
         
@@ -294,7 +299,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
     }
     
-    //Fucntion that retrives the height of a keyboard
+    ///Fucntion that retrives the height of a keyboard
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo! [UIKeyboardFrameEndUserInfoKey] as! NSValue
@@ -304,7 +309,6 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     // MARK: ImagePickerControllerDelegate functions
     
-    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         //Passes the image selected by the user to to the memeImageView
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -312,6 +316,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
     
     // MARK: UITextFieldDelegate functions
     
