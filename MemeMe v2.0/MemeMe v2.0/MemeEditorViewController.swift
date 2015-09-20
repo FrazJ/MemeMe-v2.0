@@ -30,8 +30,6 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-//    @IBOutlet weak var shareButton: UIBarButtonItem!
-//    @IBOutlet weak var topToolbar: UINavigationBar!
     @IBOutlet weak var bottomToolbar: UIToolbar!
     
     
@@ -251,7 +249,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         //CGRect fo the drawInHierarchyInRect call
         let rect = CGRectMake(
             -frame.origin.x,
-            -frame.origin.y,
+            -frame.origin.y-20,
             view.frame.size.width,
             view.frame.size.height)
         
@@ -288,7 +286,6 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     func keyboardWillShow(notification: NSNotification) {
         if bottomTextField.isFirstResponder() {
             view.frame.origin.y -= getKeyboardHeight(notification)
-            print(getKeyboardHeight(notification))
         }
     }
     

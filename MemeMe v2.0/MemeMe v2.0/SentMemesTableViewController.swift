@@ -12,10 +12,9 @@ class SentMemesTableViewController: UITableViewController {
 
     // MARK: - Properties
     
-    /**
-    Property that holds an array of the Memes that have been created and sent. The array is
-    obtained from the AppDelegate.
-    */
+    
+    ///Property that holds an array of the Memes that have been created and sent. The array is
+    ///obtained from the AppDelegate.
     var memes: [Meme] {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
     }
@@ -23,14 +22,11 @@ class SentMemesTableViewController: UITableViewController {
     
     // MARK: - ViewController lifecycle functions
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView!.reloadData()
+        
+        //Gets the latest collection of Memes
+        tableView!.reloadData()
     }
     
     
@@ -38,7 +34,7 @@ class SentMemesTableViewController: UITableViewController {
     
     @IBAction func createNewMeme(sender: UIBarButtonItem) {
         
-        let memeEditorController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
+        let memeEditorController = storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
         
         navigationController!.pushViewController(memeEditorController, animated: true)
     }
@@ -75,7 +71,7 @@ class SentMemesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         //Instantiate the MemeDeatailViewController
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewcontroller") as! MemeDetailViewController
+        let detailController = storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewcontroller") as! MemeDetailViewController
         
         //Get the meme for the row that has been selected
         let meme = memes[indexPath.row]

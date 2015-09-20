@@ -9,5 +9,15 @@
 import UIKit
 
 class MemeCollectionViewCell: UICollectionViewCell {
-    // TODO: - setup the properties of the custom cell; UIImage, UILabel?
+    
+    
+    // MARK: Outlets
+    @IBOutlet weak var memeImageView: UIImageView!
+    
+    // MARK: Functions
+    
+    ///Function sets the image of the cell
+    func setCellImage(image: UIImage) {
+        memeImageView.image = image
+    }
 }
