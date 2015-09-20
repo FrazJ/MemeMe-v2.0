@@ -15,6 +15,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     // MARK: Properties
     var topConstraint : NSLayoutConstraint!
     var bottomConstraint : NSLayoutConstraint!
+    var shareButton : UIBarButtonItem!
     
     let memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
@@ -29,8 +30,8 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var topToolbar: UINavigationBar!
+//    @IBOutlet weak var shareButton: UIBarButtonItem!
+//    @IBOutlet weak var topToolbar: UINavigationBar!
     @IBOutlet weak var bottomToolbar: UIToolbar!
     
     
@@ -58,6 +59,13 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareMemedImage:")
+     
+        navigationItem.rightBarButtonItem = shareButton
+        
+        //Hides the tab bar
+        tabBarController?.tabBar.hidden = true
+        
         //Disable the camera button if the device doesn't have a camera
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         
@@ -69,6 +77,10 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        //Displays the tab bar
+        tabBarController?.tabBar.hidden = false
+        
         unsubscribeFromKeyboardNotifications()
     }
     
@@ -97,36 +109,6 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         }
         
     }
-    
-    ///Function that shares and saves a MemedImage
-    @IBAction func shareMemedImage(sender: UIBarButtonItem) {
-        
-        //Generated a memed image
-        let memedImage = generateMemedImage()
-        
-        //Creates a new ActivityViewController
-        let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
-        
-        //Closure for handling the users action with the ActivityViewController
-        activityViewController.completionWithItemsHandler = { activity, completed, items, error in
-            if completed {
-                
-                //Save the image
-                self.save()
-                
-                //Dismiss the view controller
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-        }
-        presentViewController(activityViewController, animated: true, completion: nil)
-    }
-    
-    ///Function is called when the user presses the cancel button. It dismisses the ViewController
-    ///and returns the user to the Sent Memes view.
-    @IBAction func cancelMakingMeme(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     
     // MARK: Methods
     
@@ -217,15 +199,39 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
             object: nil)
     }
     
+    ///Function is called when the user presses the action button in the navigation bar. It takes a
+    /// screenshot of the image currently on the screen and passes it to an ActivityController
+    func shareMemedImage(sender: UIBarButtonItem) {
+        
+        //Generated a memed image
+        let memedImage = generateMemedImage()
+        
+        //Creates a new ActivityViewController
+        let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        
+        //Closure for handling the users action with the ActivityViewController
+        activityViewController.completionWithItemsHandler = { activity, completed, items, error in
+            if completed {
+                
+                //Save the image
+                self.save()
+                
+                //Dismiss the view controller
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    
     ///Function that generates a memeImage from the image and text in the memeEditor
     func generateMemedImage() -> UIImage {
         
-        //Hide the toolbars
-        topToolbar.hidden = true
+        //Hide the navigationbar and toolbar
+        navigationController?.navigationBar.hidden = true
         bottomToolbar.hidden = true
         
         //Size of the selected image
-        var imageSize = memeImageView.image!.size
+        let imageSize = memeImageView.image!.size
         
         //Frame of the image after having aspect fit applied
         var frame = AVMakeRectWithAspectRatioInsideRect(imageSize, memeImageView.bounds)
@@ -238,7 +244,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
             floor(frame.size.height))
         
         //CGRect fo the drawInHierarchyInRect call
-        var rect = CGRectMake(
+        let rect = CGRectMake(
             -frame.origin.x,
             -frame.origin.y,
             view.frame.size.width,
@@ -251,8 +257,8 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         let memedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        //Show the toolbars
-        topToolbar.hidden = false
+        //Show the navigationbar and toolbar
+        navigationController?.navigationBar.hidden = false
         bottomToolbar.hidden = false
         
         return memedImage
@@ -264,7 +270,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         let memedImage = generateMemedImage()
         
         //Create a meme object to store the memed image
-        var meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!,
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!,
             originalImage: memeImageView.image!, memedImage: memedImage)
         
         //Add the meme to the memes array in the Application Delegate
@@ -277,7 +283,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     func keyboardWillShow(notification: NSNotification) {
         if bottomTextField.isFirstResponder() {
             view.frame.origin.y -= getKeyboardHeight(notification)
-            println(getKeyboardHeight(notification))
+            print(getKeyboardHeight(notification))
         }
     }
     
@@ -298,16 +304,14 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     // MARK: ImagePickerControllerDelegate functions
     
-    func imagePickerController(picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         //Passes the image selected by the user to to the memeImageView
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             memeImageView.image = image
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
     
     // MARK: UITextFieldDelegate functions
     
@@ -320,7 +324,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     //Function ensures that any characters entered are in upper case
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
 
-        textField.text = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string.uppercaseString)
+        textField.text = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string.uppercaseString)
         
         return false
     }
