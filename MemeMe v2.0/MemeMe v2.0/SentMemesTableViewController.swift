@@ -27,6 +27,9 @@ class SentMemesTableViewController: UITableViewController {
         
         //Gets the latest collection of Memes
         tableView!.reloadData()
+        
+        //Make sure the tab bar is visuble when this viewController loads
+        tabBarController?.tabBar.hidden = false
     }
     
     

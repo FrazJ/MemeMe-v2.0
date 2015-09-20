@@ -16,6 +16,8 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     var topConstraint : NSLayoutConstraint!
     var bottomConstraint : NSLayoutConstraint!
     var shareButton : UIBarButtonItem!
+    var memeToEdit : Meme!
+    var memeToEditIndex : Int!
     
     let memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
@@ -38,19 +40,45 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Setup the top textField
-        configureTextField(topTextField,
-            text: "TOP",
-            delegate: self,
-            attributes: memeTextAttributes,
-            alignment: .Center)
+        //Check to see if the editor is creating a new meme or editing an existing meme
+        if memeToEdit == nil {
         
-        //Setup the bottom textField
-        configureTextField(bottomTextField,
-            text: "BOTTOM",
-            delegate: self,
-            attributes: memeTextAttributes,
-            alignment: .Center)
+            //A new meme is being created so...
+            
+            //Setup the top textField with default text
+            configureTextField(topTextField,
+                text: "TOP",
+                delegate: self,
+                attributes: memeTextAttributes,
+                alignment: .Center)
+        
+            //Setup the bottom textField with default text
+            configureTextField(bottomTextField,
+                text: "BOTTOM",
+                delegate: self,
+                attributes: memeTextAttributes,
+                alignment: .Center)
+        } else {
+            
+            //A meme is being edited so...
+            
+            //Setup the top textField with the text from the existing meme
+            configureTextField(topTextField,
+                text: memeToEdit.topText,
+                delegate: self,
+                attributes: memeTextAttributes,
+                alignment: .Center)
+            
+            //Setup the bottom textField with the text from the existing meme
+            configureTextField(bottomTextField,
+                text: memeToEdit.bottomText,
+                delegate: self,
+                attributes: memeTextAttributes,
+                alignment: .Center)
+            
+            //Setup the ImageView to have the correct picture
+            memeImageView.image = memeToEdit.originalImage
+        }
     }
 
     
@@ -77,6 +105,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         
         subscribeToKeyboardNotifications()
     }
+    
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -226,8 +255,17 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
                 //Save the image
                 self.save()
                 
-                //Dismiss the view controller
+                //Dismiss the activity controller
                 self.dismissViewControllerAnimated(true, completion: nil)
+                
+                //If the meme that has just been saved is one that has been edited, delete the old meme
+                if self.memeToEdit != nil {
+                    self.deleteOldMeme()
+                }
+                
+                //Return to the sentMemesViewController after saving a meme
+                self.navigationController?.popToRootViewControllerAnimated(true)
+                
             }
         }
         presentViewController(activityViewController, animated: true, completion: nil)
@@ -310,6 +348,11 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
         return keyboardSize.CGRectValue().height
     }
     
+    ///Function that deletes an old meme if it has been edited
+    func deleteOldMeme() {
+        //Remove the meme that has just been edited from the array of memes
+        (UIApplication.sharedApplication().delegate as! AppDelegate).memes.removeAtIndex(memeToEditIndex)
+    }
     
     // MARK: ImagePickerControllerDelegate functions
     
@@ -319,6 +362,7 @@ UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegat
             memeImageView.image = image
         }
         dismissViewControllerAnimated(true, completion: nil)
+        
     }
     
     

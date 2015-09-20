@@ -50,6 +50,16 @@ class MemeDetailViewController: UIViewController {
     
     ///Function edits launches the meme Editor so that the currently selected Meme can be edited.
     @IBAction func editMeme(sender: UIBarButtonItem) {
+        
+        //Instantiate the EditorViewController
+        let memeEditorViewController = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
+        
+        //Pass the EditorViewContoller the meme and its index that needs editing
+        memeEditorViewController.memeToEdit = meme
+        memeEditorViewController.memeToEditIndex = memeIndex
+        
+        //Push the EditorViewController onto the stack
+        navigationController?.pushViewController(memeEditorViewController, animated: true)
     }
     
 }
