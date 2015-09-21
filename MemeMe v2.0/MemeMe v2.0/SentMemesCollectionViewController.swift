@@ -42,6 +42,8 @@ class SentMemesCollectionViewController: UICollectionViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         //Gets the latest collection of Memes
         collectionView!.reloadData()
         
