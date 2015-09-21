@@ -41,9 +41,13 @@ class SentMemesCollectionViewController: UICollectionViewController {
         collectionView?.backgroundColor = .whiteColor()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         //Gets the latest collection of Memes
         collectionView!.reloadData()
+        
+        //Make sure the tab bar is visuble when this viewController loads
+        tabBarController?.tabBar.hidden = false
+        
     }
     
     // MARK: - Actions
